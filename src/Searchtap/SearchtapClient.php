@@ -7,13 +7,14 @@ class SearchtapClient
     private $collectionName;
     private $adminKey;
     private $searchKey;
-
+    private $cert_path;
 
     public function __construct($collectionName, $adminKey, $searchKey)
     {
         $this->collectionName = $collectionName;
         $this->adminKey = $adminKey;
         $this->searchKey = $searchKey;
+        $this->cert_path = realpath(dirname(__FILE__).'/../../gs_cert/searchtap.io.crt');
     }
 
     public function addObjects($productArray)
@@ -24,7 +25,7 @@ class SearchtapClient
 
         curl_setopt_array($curl, array(
             CURLOPT_URL => "https://api.searchtap.io/v1/collections/" . $this->collectionName,
-            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYPEER => true,
             CURLOPT_SSL_VERIFYHOST => 2,
             CURLOPT_CAINFO => $this->cert_path,
             CURLOPT_RETURNTRANSFER => true,
@@ -41,9 +42,8 @@ class SearchtapClient
             ),
         ));
 
-        curl_exec($curl);
+        $result = curl_exec($curl);
         $err = curl_error($curl);
-
         curl_close($curl);
     }
 
@@ -55,7 +55,7 @@ class SearchtapClient
 
         curl_setopt_array($curl, array(
             CURLOPT_URL => "https://api.searchtap.io/v1/collections/" . $this->collectionName . "/delete",
-            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYPEER => true,
             CURLOPT_SSL_VERIFYHOST => 2,
             CURLOPT_CAINFO => $this->cert_path,
             CURLOPT_RETURNTRANSFER => true,
@@ -73,9 +73,7 @@ class SearchtapClient
         ));
 
         $exec = curl_exec($curl);
-
         $err = curl_error($curl);
-
         curl_close($curl);
     }
 
