@@ -1,0 +1,19 @@
+{
+    "name": "ravneetkaur1995/searchtap-client-php",
+    "description": "Searchtap API",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Searchtap Team",
+            "email": "ravneet@bitqit.com"
+        }
+    ],
+    "require": {
+	"php": ">=5.3.0"
+    },
+	"autoload": {
+        "psr-0": {
+            "Searchtap": "src/"
+        }
+    }
+}
